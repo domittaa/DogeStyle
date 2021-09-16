@@ -1,0 +1,89 @@
+<table class="table table-hover">
+    <tr>
+        <td width="70px">
+            <a href="{{ url_for('user.user', username=post.author.username) }}"></a>
+            {% if post.author.image is not none %}
+                <img src="{{url_for('static', filename='avatars/' + post.author.id|string) }}"
+                    height="54" width="54" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+            {% else %}
+                <img alt="avatar" src="{{ post.author.avatar(64) }}" style=" border-radius: 50%;">
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    <strong style="font-size: 25px;">
+                        <a href="{{ url_for('user.user', username=post.author.username) }}" style="color:rgb(196,128,175);">
+                        {{ post.author.username }}
+                    </a></strong>
+                </span>
+            {% endset %}
+            {{ user_link }}
+            <br><br>
+
+            <a style="color: black;" href="{{ url_for('post.view_post', id=post.id) }}" class="stretched-link">
+            <span id="post{{ post.id }}">
+                {{ post.body }}
+            {% if post.filename %}
+             <br><br>
+                <img src="{{url_for('static', filename='files/' + post.filename) }}" width="300" height="200">
+            {% endif %}
+            </span>
+            </a>
+
+        <br><br>
+            <b style="color: #c480af" >Tags: </b>
+            {% for tag in post.tags %}
+            <a style="color: #c480af" href="{{ url_for('post.view_posts_with_tag', name=tag.name) }}">
+                    {{ tag.name }}, </a>
+            {% endfor %}
+        <br><br>
+            <a style="color: #c480af" href="{{ url_for('post.view_likes', id=post.id) }}">
+                {{ post.likes.count() }} likes,</a>
+            <a style="color: #c480af" href="{{ url_for('post.view_dislikes', id=post.id) }}">
+                {{ post.dislikes.count() }} dislikes</a>
+        <br>
+            <i style="color: #7fc4c4">{{ moment(post.timestamp).fromNow() }}</i>
+            <br><br>
+                {% if current_user == post.author %}
+            <ul class="nav navbar-nav">
+            <li>
+                <form style="color: #c480af" action="{{ url_for('post.edit_post', id=post.id) }}">
+                    <input type="submit" value="Edit Post">
+                </form>
+            </li>
+            <li style="padding-left:1em">
+                <form style="color: #c480af" action="{{ url_for('post.delete_post', id=post.id) }}" method="post">
+                <input class="danger" type="submit" value="Delete Post" onclick="return confirm('Are you sure?');">
+                </form>
+            </li>
+            </ul>
+        {% endif %}
+        {% if current_user != post.author %}
+            <ul class="nav navbar-nav">
+            {% if current_user.liked_posts(post) %}
+                <li><form style="color: #c480af" action="{{ url_for('post.like_post', id=post.id, action='unlike') }}">
+                        <input type="submit" value="Unlike">
+            </form></li>
+                <br>
+                {% else %}
+                {% if current_user.disliked_posts(post) %}
+                <li><form style="color: #c480af" action="{{ url_for('post.dislike_post', id=post.id, action='delete_dislike') }}">
+                                                            <input type="submit" value="Delete dislike">
+                </form></li>
+                {% else %}
+                <li><form style="color: #c480af" action="{{ url_for('post.like_post', id=post.id, action='like') }}">
+                        <input type="submit" value="Like">
+                </form></li>
+                    <li style="padding-left:1em">
+                    <form style="color: #c480af" action="{{ url_for('post.dislike_post', id=post.id, action='dislike') }}">
+                                                            <input type="submit" value="Dislike">
+                    </form></li>
+                {% endif %}
+                {% endif %}
+        {% endif %}
+            </ul>
+        </td>
+    </tr>
+</table>
+

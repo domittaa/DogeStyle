@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="login">
+    <h1>Login to DogeStyle 2.0</h1>
+    <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg"><br>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+      <p class="username">
+          {{ form.username.label('Username:') }}<br>
+          {{ form.username() }}<br>
+          {% for error in form.username.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p class="password">
+          {{ form.password.label('Password:') }}<br>
+          {{ form.password() }}<br>
+          {% for error in form.password.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+    <p class="remember_me">
+        {{ form.remember_me.label('Rember me') }}
+        {{ form.remember_me() }}
+    </p>
+      <p class="submit">
+          {{ form.submit() }}
+      </p>
+    </form>
+    <div class="login-help">
+        <p>Forgot your password? <a href="{{ url_for('auth.reset_password_request') }}">Click to reset it.</a></p>
+        <p>New user? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+    </div>
+    {% endif %}
+{% endblock %}
+
+<!-- there are no HTML fields in this template because the fields from the form object know how to render themselves -->

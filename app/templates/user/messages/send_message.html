@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1 style="color: rgba(168, 55, 130, 0.91);">
+        <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg" style="border-radius: 5px; width: 110px; height: 90px">
+        Send Message to {{ recipient }}</h1>
+{% if form %}
+        <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p style="color: rgb(196,128,175); font-size: 20px" >
+            {{ form.message.label }}
+                    <p style="color: rgb(127,196,196);">
+        {{ form.message(class_="post") }}<br>
+        </p><br>
+        <p style="color: rgb(196,128,175);">
+        {{ form.submit(class_="post") }}
+        </p>
+        </form>
+    {% endif %}
+{% endblock %}

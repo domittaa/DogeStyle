@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<h1 style="color: rgba(168, 55, 130, 0.91);">
+    <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg"
+             style="border-radius: 5px; width: 110px; height: 90px">
+         Top 10 most popular posts:</h1><br>
+<h4>
+       <div class="dropdown">
+        <a style="color: rgb(196,128,175);" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+               aria-haspopup="true" aria-expanded="false">Time <span class="caret"></span></a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a href="{{ url_for('post.popular_posts', time='this_hour') }}">This hour</a></li>
+            <li><a href="{{ url_for('post.popular_posts', time='this_day') }}">Today</a></li>
+            <li><a href="{{ url_for('post.popular_posts', time='this_month') }}">This month</a></li>
+            <li><a href="{{ url_for('post.popular_posts', time='this_year') }}">This year</a></li>
+            <li><a href="{{ url_for('post.popular_posts', time='all_time') }}">All time</a></li>
+        </ul></div></h4>
+    <br>
+
+ {% if result|length == 0 %}
+    <h3 style="color:#c480af;"> There are no posts from this time.</h3>
+    {% else %}
+    {% for post in result %}
+    <table class="table table-hover">
+    <tr>
+        <td width="70px">
+            <a href="{{ url_for('user.user', username=post.username) }}"></a>
+            {% if post.image is not none %}
+                <img src="{{url_for('static', filename='avatars/' + post.user_id|string) }}"
+                    height="64" width="64" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+            {% else %}
+                <img alt="avatar" src="{{ post.avatar }}" style=" border-radius: 50%;">
+            {% endif %}
+        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    <strong><a href="{{ url_for('user.user', username=post.username) }}"
+                                style="color:rgb(196,128,175);">
+                        {{ post.username }}
+                    </a></strong>
+                </span>
+            {% endset %}
+            {{ user_link }}
+            <br>
+            <a style="color: black;" href="{{ url_for('post.view_post', id=post.id) }}" class="stretched-link">
+            <span id="post{{ post.id }}">{{ post.body }}</span>
+            </a><br>
+
+        <i style="color: #7fc4c4">{{ moment(post.timestamp).fromNow() }}</i>
+            <br>
+        <a style="color: #c480af" href="{{ url_for('post.view_likes', id=post.id) }}">{{ post.likes }} likes,</a>
+        <a style="color: #c480af" href="{{ url_for('post.view_dislikes', id=post.id) }}">{{  post.dislikes }} dislikes </a>
+
+        <br><br>
+        </td>
+    </tr>
+</table>
+{% endfor %}
+{% endif %}
+{% endblock %}

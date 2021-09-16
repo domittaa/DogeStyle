@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    {% if comments |length ==0 %}
+    <h3 style="color: rgba(168, 55, 130, 0.91)">{{ user.username }} has no comments yet.</h3>
+    {% else %}
+    <h3 style="color: rgba(168, 55, 130, 0.91)">{{ user.username }}'s Comments:</h3>
+            {% for comment in comments %}
+                <table class="table table-hover">
+                <tr>
+                <td>
+                    <br>
+                    {{ comment.body }}
+                    <br>
+                    <i style="color: #7fc4c4">{{ moment(comment.timestamp).fromNow() }} </i>
+                    <br><br>
+                    <ul class="nav navbar-nav">
+                    <li>
+                    <form style="color: #c480af" action="{{ url_for('post.view_post', id=comment.post.id) }}">
+                        <input type="submit" value="View post"></form>
+                    </li></ul>
+                </td>
+                </tr>
+                </table>
+            {% endfor %}
+    {% endif %}
+        <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ prev_url or '#' }}"><span aria-hidden="true">&larr;</span>'Newer comments</a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ next_url or '#' }}">Older comments'<span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

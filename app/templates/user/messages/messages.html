@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    {% if messages|length == 0 %}
+    <h1 style="color: rgba(168, 55, 130, 0.91);">
+    <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg" style="border-radius: 5px; width: 110px; height: 90px">
+        You do not have any messages yet
+    </h1>
+    {% else %}
+    <h1 style="color: rgba(168, 55, 130, 0.91)">
+        <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg" style="border-radius: 5px; width: 110px; height: 90px">
+        Messages
+    </h1>
+    {% for post in messages %}
+        <table class="table table-hover">
+        <tr>
+        <td width="70px">
+            <a href="{{ url_for('user.user', username=post.author.username) }}"></a>
+            {% if post.author.image is not none %}
+            <img src="{{url_for('static', filename='avatars/' + post.author.id|string) }}"
+                height="64" width="70" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+            {% else %}
+            <a href="{{ url_for('user.user', username=post.author.username) }}"></a>
+                            <img alt="avatar" src="{{ post.author.avatar(64) }}" style=" border-radius: 50%;">
+            {% endif %}        </td>
+        <td>
+            {% set user_link %}
+                <span class="user_popup">
+                    <strong><a href="{{ url_for('user.user', username=post.author.username) }}"
+                                style="color:rgb(196,128,175);">
+                        {{ post.author.username }}
+                    </a></strong>
+                </span>
+            {% endset %}
+            {{ user_link }}
+            <br>
+            <span id="post{{ post.id }}">{{ post.body }}</span>
+            <br>
+            <a  style="color:rgb(196,128,175);" href="{{ url_for('user.answer_message', id=post.id) }}">Answer</a>
+        </td>
+        </tr>
+        </table>
+    {% endfor %}
+    {% endif %}
+
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ prev_url or '#' }}"><span aria-hidden="true">&larr;</span>Newer messages</a>
+            </li>
+        <li class="next{% if not next_url %} disabled{% endif %}">
+            <a style="color: rgb(127,196,196);" href="{{ next_url or '#' }}">Older messages<span aria-hidden="true">&rarr;</span></a>
+        </li>
+        </ul>
+    </nav>
+{% endblock %}

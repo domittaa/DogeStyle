@@ -1,0 +1,142 @@
+2021-08-24 07:22:06,233 ERROR: Exception on /answer/comment/4 [GET] [in d:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "d:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 401, in answer_comment
+    return render_template('answer_comment.html', comment=comment, form=form)
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\microblog\app\templates\view_post.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "D:\microblog\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "D:\microblog\app\templates\base.html", line 66, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "D:\microblog\app\templates\view_post.html", line 7, in block 'app_content'
+    <a style="color: #c480af" href="{{ url_for('main.user', username=post.author.username) }}"></a>
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined
+2021-08-26 07:24:31,504 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-26 07:28:46,426 ERROR: Exception on /index [POST] [in D:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 41, in index
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "D:\microblog\venv\lib\site-packages\sqlalchemy\orm\session.py", line 1428, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "D:\microblog\venv\lib\site-packages\sqlalchemy\orm\session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "D:\microblog\venv\lib\site-packages\sqlalchemy\orm\session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: 'NoneType' object has no attribute '_sa_instance_state' (Background on this error at: https://sqlalche.me/e/14/7s2a)
+2021-08-26 07:38:14,738 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-26 08:29:32,620 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-26 08:33:09,772 ERROR: Exception on /popular/posts [GET] [in D:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 441, in popular_posts
+    posts = []
+TypeError: 'int' object is not iterable
+2021-08-26 08:33:09,772 ERROR: Exception on /popular/posts [GET] [in D:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 441, in popular_posts
+    posts = []
+TypeError: 'int' object is not iterable
+2021-08-26 08:34:20,060 ERROR: Exception on /popular/posts [GET] [in D:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 441, in popular_posts
+    posts = []
+TypeError: 'int' object is not iterable
+2021-08-26 08:34:39,945 ERROR: Exception on /popular/posts [GET] [in D:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "D:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 441, in popular_posts
+    posts = []
+TypeError: 'int' object is not iterable
+2021-08-26 08:35:20,678 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-31 08:07:42,446 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-31 08:07:51,918 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-31 08:33:30,034 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-31 08:33:40,840 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-31 09:03:29,368 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-09-01 09:59:53,374 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-01 10:00:08,806 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 09:34:08,800 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 09:34:18,839 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:40:13,628 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:40:27,613 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:40:36,231 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:41:29,594 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:42:17,781 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]
+2021-09-03 10:43:43,660 INFO: Microblog startup [in D:\microblog\app\__init__.py:83]

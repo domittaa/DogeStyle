@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1 style="color: rgba(168, 55, 130, 0.91);">
+    <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg"
+             style="border-radius: 5px; width: 110px; height: 90px">
+         All posts on DogeStyle:</h1><br>
+{% for post in posts %}
+{% include 'post/post_view/_post.html' %}
+{% endfor %}
+        <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer posts
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ next_url or '#' }}"> Older posts <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

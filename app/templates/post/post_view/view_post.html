@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1 style="color: rgba(168, 55, 130, 0.91);">
+    <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg" style="border-radius: 5px; width: 110px; height: 90px">
+    {{ post.author.username }}'s post:
+    </h1>
+    {% include 'post/post_view/_post.html' %}
+
+    <br>
+
+    <h3 style="color: rgba(168, 55, 130, 0.91)">{{ post.comments.count() }} comments</h3>
+    {% for comment in comments %}
+    {% if not comment.parent_id %}
+        <table class="table table-hover">
+            <tr>
+                <td width="70px">
+                    <a href="{{ url_for('user.user', username=comment.user.username) }}"></a>
+                    {% if comment.user.image is not none %}
+                    <img src="{{url_for('static', filename='avatars/' + comment.user.id|string) }}"
+                        height="64" width="64" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+                    {% else %}
+                    <a href="{{ url_for('user.user', username=comment.user.username) }}"></a>
+                            <img alt="avatar" src="{{ comment.user.avatar(64) }}" style=" border-radius: 50%;">
+                {% endif %}                </td>
+                <td>
+                {% set user_link %}
+                    <span class="user_popup">
+                        <strong><a href="{{ url_for('user.user', username=comment.user.username) }}"
+                                style="color:rgb(196,128,175);">
+                            {{ comment.user.username }}
+                        </a></strong>
+                    </span>
+                    {% endset %}
+                    {{ user_link }}
+                    <br>
+                    {{ comment.body }}
+                    <br>
+                    <i style="color: #7fc4c4">{{ moment(comment.timestamp).fromNow() }} </i>
+                <br>
+                    <a style="color: #c480af" href="{{ url_for('post.view_comment_likes', id=comment.id) }}">
+                        {{ comment.likes.count() }} likes,</a>
+                    <a style="color: #c480af" href="{{ url_for('post.view_comment_dislikes', id=comment.id) }}">
+                        {{ comment.dislikes.count() }} dislikes </a>
+                    <br><br>
+                    {% if current_user == comment.user %}
+                        <ul class="nav navbar-nav">
+                        <li>
+                            <form style="color: #c480af" action="{{ url_for('post.edit_comment', id=comment.id) }}">
+                                <input type="submit" value="Edit Comment"></form>
+                        </li>
+                        <li style="padding-left:1em">
+                            <form style="color: #c480af" action="{{ url_for('post.delete_comment', id=comment.id) }}" method="post">
+                                <input class="danger" type="submit" value="Delete Comment"
+                                       onclick="return confirm('Are you sure?');">
+                            </form>
+                        </li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav navbar-nav">
+                        {% if current_user.liked_comments(comment) %}
+                            <li>
+                            <form style="color: #c480af" action="{{ url_for('post.like_comment', id=comment.id, action='unlike') }}">
+                                <input type="submit" value="Unlike"></form>
+                            </li>
+                        {% else %}
+                            {% if current_user.disliked_comments(comment) %}
+                             <li>
+                                 <form style="color: #c480af" action="{{ url_for('post.dislike_comment',
+                                       id=comment.id, action='delete_dislike') }}">
+                                 <input type="submit" value="Delete dislike"></form>
+                             </li>
+                            {% else %}
+                                <li>
+                            <form style="color: #c480af" action="{{ url_for('post.like_comment', id=comment.id, action='like') }}">
+                                <input type="submit" value="Like"></form></li>
+                            <li style="padding-left:1em">
+                                <form style="color: #c480af"
+                                      action="{{ url_for('post.dislike_comment', id=comment.id, action='dislike') }}">
+                                    <input type="submit" value="Dislike"></form>
+                            </li></ul>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% endif %}
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% if form %}
+        <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p style="color: rgb(196,128,175); font-size: 20px" >
+            {{ form.body.label }}
+        </p>
+            <p>
+        {{ form.body(class_="comment") }}<br>
+        </p><br>
+        <p>
+        {{ form.submit(class_="post") }}
+        </p>
+        </form>
+    {% endif %}
+
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ prev_url or '#' }}"><span aria-hidden="true">&larr;</span> Newer comments</a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ next_url or '#' }}"> Older comments <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
+    </nav>
+
+{% endblock %}
+

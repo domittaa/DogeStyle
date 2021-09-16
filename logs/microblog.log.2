@@ -1,0 +1,138 @@
+2021-08-17 08:56:16,127 INFO: Microblog startup [in D:\microblog\app\__init__.py:59]
+2021-08-17 08:57:07,130 INFO: Microblog startup [in D:\microblog\app\__init__.py:59]
+2021-08-17 09:14:49,901 INFO: Microblog startup [in D:\microblog\app\__init__.py:59]
+2021-08-17 11:51:49,315 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-17 11:59:53,589 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-17 13:54:49,452 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-18 07:17:46,023 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-18 07:17:54,827 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-18 07:33:48,147 INFO: Microblog startup [in D:\microblog\app\__init__.py:80]
+2021-08-18 13:07:46,802 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-20 08:50:35,120 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-20 19:35:15,278 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-24 07:12:06,521 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-24 07:12:20,912 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-24 07:15:21,538 INFO: Microblog startup [in D:\microblog\app\__init__.py:86]
+2021-08-24 07:15:28,047 ERROR: Exception on /answer/comment/5 [GET] [in d:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "d:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 401, in answer_comment
+    return render_template('view_post.html', comment=comment, form=form)
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\microblog\app\templates\view_post.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "D:\microblog\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "D:\microblog\app\templates\base.html", line 66, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "D:\microblog\app\templates\view_post.html", line 7, in block 'app_content'
+    <a style="color: #c480af" href="{{ url_for('main.user', username=post.author.username) }}"></a>
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined
+2021-08-24 07:16:51,225 ERROR: Exception on /answer/comment/4 [GET] [in d:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "d:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 401, in answer_comment
+    return render_template('view_post.html', comment=comment, form=form)
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\microblog\app\templates\view_post.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "D:\microblog\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "D:\microblog\app\templates\base.html", line 66, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "D:\microblog\app\templates\view_post.html", line 7, in block 'app_content'
+    <a style="color: #c480af" href="{{ url_for('main.user', username=post.author.username) }}"></a>
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined
+2021-08-24 07:19:47,934 ERROR: Exception on /answer/comment/4 [GET] [in d:\microblog\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "d:\microblog\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "d:\microblog\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\microblog\app\main\routes.py", line 401, in answer_comment
+    return render_template('answer_comment.html', comment=comment, form=form)
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "d:\microblog\venv\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\microblog\app\templates\view_post.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "D:\microblog\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+    {%- block html %}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+    {% block body -%}
+  File "d:\microblog\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+    {% block content -%}
+  File "D:\microblog\app\templates\base.html", line 66, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "D:\microblog\app\templates\view_post.html", line 7, in block 'app_content'
+    <a style="color: #c480af" href="{{ url_for('main.user', username=post.author.username) }}"></a>
+  File "d:\microblog\venv\lib\site-packages\jinja2\environment.py", line 474, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined

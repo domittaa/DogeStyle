@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block app_content %}
+
+{% if followers|count > 0 %}
+    <h3 style="color: rgba(168, 55, 130, 0.91)">People who follow {{ user.username }}:</h3>
+    {% for follower in followers %}
+            <table class="table table-hover">
+            <tr>
+                <td width="70px">
+                    <a href="{{ url_for('user.user', username=follower.username) }}"></a>
+                    {% if follower.image is not none %}
+                        <img src="{{url_for('static', filename='avatars/' + follower.id|string) }}"
+                            height="54" width="54" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+                    {% else %}
+                        <img alt="avatar" src="{{ follower.avatar(64) }}" style=" border-radius: 50%;">
+                    {% endif %}
+                <td>
+                    {% set user_link %}
+                        <span class="user_popup">
+                            <strong><a href="{{ url_for('user.user', username=follower.username) }}" style="color:rgb(196,128,175);">
+                                {{ follower.username }}
+                            </a></strong>
+                        </span>
+                    {% endset %}
+                    {{ user_link }}
+                </td>
+            </tr>
+            </table>
+    {% endfor %}
+{% else %}
+<h3 style="color: rgba(168, 55, 130, 0.91)">{{ user.username }} has no followers yet.</h3>
+{% endif %}
+{% endblock %}

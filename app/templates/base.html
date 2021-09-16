@@ -1,0 +1,174 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block title %}
+      {% if title %}
+      {{ title }} - DogeStyle
+      {% else %}
+      DogeStyle
+      {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header" >
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar" ></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a style="color: rgba(168, 55, 130, 0.91);" class="navbar-brand" href="{{ url_for('post.index') }}">
+                    DogeStyle 2.0</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ><a style="color: rgb(196,128,175);" href="{{ url_for('post.index') }}">Home</a></li>
+
+                    <li class="dropdown">
+                        <a style="color: rgb(196,128,175);" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a style="color: rgb(196,128,175);" href="{{ url_for('post.explore') }}">Posts</a></li>
+                            <li><a style="color: rgb(196,128,175);" href="{{ url_for('user.explore') }}">Users</a></li>
+                        </ul></li>
+
+                    <li class="dropdown">
+                        <a style="color: rgb(196,128,175);" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Popular <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a style="color: rgb(196,128,175);" href="{{ url_for('post.popular_tags', time='all_time') }}">Tags</a>
+                            </li>
+                            <li>
+                                <a style="color: rgb(196,128,175);" href="{{ url_for('post.popular_posts', time='all_time') }}">Posts</a>
+                            </li>
+                        </ul>
+                    </li>
+                    </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %} <!-- is true only if user is not logged in -->
+                        <li><a style="color: rgb(196,128,175);" href="{{ url_for('auth.login') }}">Login</a></li>
+                    {% else %}
+                        <li>
+                            <a style="color: rgb(196,128,175);" href="{{ url_for('user.messages') }}">Messages
+                                {% set new_messages = current_user.new_messages() %}
+                                <span id="message_count" class="badge"
+                                      style="visibility: {% if new_messages %}visible
+                                                         {% else %}hidden{% endif %};">
+                                     {{ new_messages }}
+                                </span> <!-- hidden if new_messages is zero -->
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                        <a style="color: rgb(196,128,175);" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ current_user.username }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <a style="color: rgb(196,128,175);" href="{{ url_for('user.user', username=current_user.username) }}">Profile</a>
+                        </li>
+                        <li>
+                            <a style="color: rgb(196,128,175);" href="{{ url_for('auth.logout') }}">Logout</a>
+                        </li>
+                        </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <br>
+                <div class="alert alert-info" role="alert" style="color:rgb(196, 127, 174)">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    {% block app_content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %} <!-- place for JavaScripts imports -->
+    {{ super() }} <!-- preserves the content from base.html -->
+    {{ moment.include_moment() }} <!-- adds moment.js library -->
+    <script>
+        $(function() { <!-- $() register a function to run when the page is loading -->
+            var timer = null;
+            var xhr = null;
+            $('.user_popup').hover(
+                function (event) {
+                    //mouse in event handler
+                    var elem = $(event.currentTarget);
+                    timer = setTimeout(function(){  <!--setTimeout takes 2 arguments- function and time i milliseconds; the function is invoked after the given delay -->
+                        timer = null;
+                        xhr = $.ajax(  <!-- xhr will hold the asonchrynous request object -->
+                            '/user/' +elem.first().text().trim() + '/popup').done(function(data) { <!-- callback function receives response- data as an argument -->
+                                xhr = null;
+                                elem.popover({
+                                    trigger: 'manual',
+                                    html: true,
+                                    animation: false,
+                                    container: elem,
+                                    content: data  //data is a html content that we put in the popover
+                                }).popover('show');
+                                flask_moment_render_all();
+                            }
+                        );
+                    }, 1000);
+                },
+                function(event) {
+                    //mouse out event handler
+                    var elem = $(event.currentTarget);
+                    if (timer) {
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                    else if (xhr) {
+                        xhr.abort();
+                        xhr = null;
+                    }
+                    else {
+                        elem.popover('destroy');
+                    }
+                }
+            )
+        });
+        function set_message_count(n) { //updates message badge to a new number
+            $('#message_count').text(n);
+            $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+        }
+        {% if current_user.is_authenticated %}
+        $(function() {  // register a function to execute after the page loads
+            var since = 0; //initialize since argument with 0
+            setInterval(function() { //calls the function at regular intervals-10 seconds here
+                $.ajax('{{ url_for('user.notifications') }}?since=' +since).done(
+                    function(notifications) {
+                        for (var i = 0; i < notifications.length; i++) {
+                            switch (notifications[i].name) {
+                                case 'unread_message_count':
+                                    set_message_count(notifications[i].data);
+                                    break;
+                            }
+                            since = notifications[i].timestamp;
+                        }
+                    }
+                );
+            }, 10000);
+        });
+        {% endif %}
+    </script>
+{% endblock %}

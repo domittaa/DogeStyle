@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    {% if likes %}
+        <h3 style="color: rgba(168, 55, 130, 0.91)">People who dislike this comment:</h3>
+        <br>
+        {% for likes in likes %}
+        <table class="table table-hover">
+            <tr>
+                <td width="70px">
+                    <a href="{{ url_for('user.user', username=likes.user.username) }}"></a>
+                    {% if likes.user.image is not none %}
+                    <img src="{{url_for('static', filename='avatars/' + likes.user.id|string) }}"
+                        height="64" width="64" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+                    {% else %}
+                    <a href="{{ url_for('user.user', username=likes.user.username) }}"></a>
+                            <img alt="avatar" src="{{ likes.user.avatar(64) }}" style=" border-radius: 50%;">
+                {% endif %}
+                <td>
+                    {% set user_link %}
+                        <span class="user_popup">
+                            <strong><a href="{{ url_for('user.user', username=likes.user.username) }}" style="color:rgb(196,128,175);">
+                                {{ likes.user.username }}
+                            </a></strong>
+                        </span>
+                    {% endset %}
+                    {{ _('%(username)s', username=user_link) }}
+                </td>
+            </tr>
+            </table>
+{% endfor %}
+{% endif %}
+{% endblock %}

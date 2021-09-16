@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="register">
+    <h1>Register</h1>
+        <img alt="Brand" src="https://e-kursy-walut.pl/wp-content/uploads/2021/05/dogecoin-shiba.jpg"><br>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+      <p class="username">
+          {{ form.username.label('Username:') }}<br>
+          {{ form.username() }}<br>
+          {% for error in form.username.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+        <p class="mail">
+          {{ form.email.label('Email adress:') }}<br>
+          {{ form.email() }}<br>
+          {% for error in form.email.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p class="password">
+          {{ form.password.label('Password:') }}<br>
+          {{ form.password() }}<br>
+          {% for error in form.password.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+          <p class="password">
+          {{ form.password2.label('Repeat password:') }}<br>
+          {{ form.password2() }}<br>
+          {% for error in form.password2.errors %}
+            <span>[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p class="submit">
+          {{ form.submit() }}
+      </p>
+    </form>
+        </div>
+    {% endif %}
+{% endblock %}

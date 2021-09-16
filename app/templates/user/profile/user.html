@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+      <table class="table table-hover">
+        <tr>
+            <td width="256px">
+            {% if user.image is not none %}
+            <img src="{{url_for('static', filename='avatars/' + user.id|string) }}"
+                height="250" width="250" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+            {% else %}
+            <a href="{{ url_for('user.user', username=user.username) }}"></a>
+                            <img alt="avatar" src="{{ user.avatar(250) }}" style=" border-radius: 50%;">
+                {% endif %}
+            </td>
+            <td>
+                <h1 style="color:rgba(168, 55, 130, 0.91)">{{ user.username }}</h1>
+                {% if user.about_me %}
+                    <p>About me: {{ user.about_me }}</p>
+                {% endif %}
+                {% if user.last_seen %}
+                    <p>Last seen: {{ moment(user.last_seen).fromNow() }}</p>
+                {% endif %}
+                <p>
+                    <a style="color:rgb(196,128,175);" href="{{ url_for('user.followers', id=user.id) }}">
+                    {{ user.followers.count() }} followers,</a>
+                    <a style="color:rgb(196,128,175);" href="{{ url_for('user.following', id=user.id)  }}">
+                    {{ user.followed.count() }} follows</a>
+                </p>
+                {% if user != current_user %}
+                <p>
+                    <a style="color:rgb(127,196,196);" href="{{ url_for('user.send_message', recipient=user.username) }}">
+                        Send private message
+                    </a>
+                </p>
+                {%  endif %}
+                <p>
+                    <a style="color:rgb(127,196,196);" href="{{ url_for('post.view_comments', id=user.id) }}">
+                        See all comments of this user</a>
+                </p>
+                {% if user == current_user %}
+                <p><a style="color: rgb(127,196,196);" href="{{ url_for('user.edit_profile') }}">Edit your profile</a></p>
+                {% elif not current_user.is_following(user) %}
+                    <form action="{{ url_for('user.follow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Follow', class_='btn btn-default') }}
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('user.unfollow', username=user.username) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow', class_='btn btn-default') }}
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    {% for post in posts %}
+        {% include 'post/post_view/_post.html' %}
+    {% endfor %}
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ prev_url or '#' }}"><span aria-hidden="true">&larr;</span>Newer posts</a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a style="color: rgb(127,196,196);" href="{{ next_url or '#' }}">Older posts <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+
+

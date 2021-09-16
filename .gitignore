@@ -1,0 +1,5 @@
+.idea
+__pycache__
+app.db
+app/static/files/*
+app/static/avatars/*

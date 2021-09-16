@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1 style="color:rgba(168, 55, 130, 0.91);">Edit Post</h1>
+{% if form %}
+        <form action="" method="post"  enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p style="color: rgb(196,128,175); font-size: 20px">
+            {{ form.post.label('Edit body:') }}
+        </p>
+        <p style="color: rgb(127,196,196);">
+        {{ form.post(cols=150, rows=4) }}<br>
+         {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+         {% endfor %}
+        </p>
+        <p style="color: rgb(196,128,175);">
+            {{ form.tag.label('Edit tags:') }}</p>
+        <p style="color: rgb(127,196,196);">
+        {{ form.tag(cols=100, rows=2) }}
+        {% for error in form.tag.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="color: rgb(196,128,175);">
+            {{ form.file.label('Choose different image:') }}</p>
+            <p style="color: rgb(127,196,196);">
+        {{ form.file }}
+        </p><br>
+        <p style="color: rgb(196,128,175);">
+        {{ form.submit() }}
+        </p>
+        </form>
+    {% endif %}
+{% endblock %}

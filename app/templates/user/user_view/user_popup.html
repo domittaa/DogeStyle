@@ -1,0 +1,27 @@
+<table class="table">
+    <tr>
+        <td width="64" style="border: 0px;">
+            {% if user.image is not none %}
+            <img src="{{url_for('static', filename='avatars/' + user.id|string) }}"
+                height="64" width="70" alt="avatar" loading="lazy" style=" border-radius: 50%;">
+            {% else %}
+            <a href="{{ url_for('user.user', username=user.username) }}"></a>
+                            <img alt="avatar" src="{{ user.avatar(64) }}" style=" border-radius: 50%;">
+            {% endif %}
+        <td style="border: 0px;">
+            <p><a style="color: #c480af" href="{{ url_for('user.user', username=user.username) }}">{{ user.username }}</a></p>
+            <small>
+                {% if user.about_me %}
+                <p>About me: {{ user.about_me }}</p>
+                {% endif %}
+                {% if user.last_seen %}
+                <p>Last seen: {{ moment(user.last_seen).fromNow() }}</p>
+                {% endif %}
+                <p>
+                    {{ user.followers.count() }} followers,
+                    {{ user.followed.count() }} follows
+                </p>
+            </small>
+        </td>
+    </tr>
+</table>
