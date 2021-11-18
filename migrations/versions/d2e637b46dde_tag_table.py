@@ -21,6 +21,7 @@ def upgrade():
     op.create_table('tag',
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=36), nullable=True),
+                    sa.Column('post_id', sa.Integer()),
                     sa.ForeignKeyConstraint(['post_id'], ['post.id'], ),
                     sa.PrimaryKeyConstraint('id')
                     )
